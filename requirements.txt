@@ -10,3 +10,4 @@ tiktoken
 langchain-text-splitters
 langchain-google-genai
 python-dotenv
+sentence-transformers
