@@ -98,7 +98,7 @@ RAG-Document-Assistant/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/ShreyaPathak87/RAG-Document-Assistant.git
 cd RAG-Document-Assistant
 ```
 
