@@ -4,7 +4,7 @@ import requests
 API_URL = "http://127.0.0.1:8000"
 
 st.set_page_config(
-    page_title="AI Document Assistant",
+    page_title="🤖 AI-Powered Document Assistant (RAG)",
     page_icon="📄",
     layout="wide"
 )
@@ -96,9 +96,16 @@ if st.button("Ask"):
             st.subheader("📄 Source")
             st.write(result["sources"])
 
-            with st.expander("🔍 Retrieved Chunk"):
-                for chunk in result["retrieved_chunks"]:
-                    st.write(chunk)
+    with st.expander("🔍 Retrieved Results"):
+     for r in result.get("results", []):
+        st.markdown(f"""
+        **📄 Chunk {r['rank'] if 'rank' in r else ''}**
 
-        else:
-            st.error(response.text)
+        {r["content"]}
+
+        **📌 Source:** {r.get("source", {})}
+        """)
+
+     else:
+        st.error(response.text)
+

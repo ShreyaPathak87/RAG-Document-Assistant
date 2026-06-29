@@ -6,7 +6,7 @@ CHROMA_DB = "chroma_db"
 def store_documents(chunks):
     embeddings = get_embeddings()
 
-    # Remove duplicate chunks based on text
+    # Remove duplicate chunks
     unique_chunks = []
     seen = set()
 
@@ -15,13 +15,16 @@ def store_documents(chunks):
             unique_chunks.append(chunk)
             seen.add(chunk.page_content)
 
-    # Create or update Chroma database
-    vector_store = Chroma.from_documents(
-        documents=unique_chunks,
-        embedding=embeddings,
-        persist_directory=CHROMA_DB
+    # STEP 1: Load existing DB (NOT recreate)
+    vector_store = Chroma(
+        persist_directory=CHROMA_DB,
+        embedding_function=embeddings
     )
 
+    # STEP 2: ADD new documents only (not rebuild)
+    vector_store.add_documents(unique_chunks)
+
+    # STEP 3: Persist safely
     vector_store.persist()
 
     return vector_store
